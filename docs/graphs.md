@@ -173,10 +173,14 @@ self.add(plane)
 ## Axis Labels
 
 ```python
-# Built-in label method
-x_label = axes.get_x_axis_label(Tex("x"))
-y_label = axes.get_y_axis_label(Tex("f(x)"))
+# Built-in label method — pass a STRING, not a Tex object
+# (get_axis_label calls Tex() internally; passing a Tex object crashes)
+x_label = axes.get_x_axis_label("x")
+y_label = axes.get_y_axis_label("f(x)")
 self.play(Write(x_label), Write(y_label))
+
+# To control font size, scale the result:
+x_label.scale(0.7)
 
 # Manual tick labels (common pattern)
 labels = VGroup(*[

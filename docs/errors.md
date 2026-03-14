@@ -99,6 +99,37 @@ IPython (used inside the Sublime Text + Terminus workflow) formats errors with `
 
 ---
 
+## 4. Passing a `Tex` object to `get_x_axis_label` / `get_y_axis_label`
+
+**Error:**
+```
+TypeError: sequence item 0: expected str instance, Tex found
+```
+
+**What happened:**
+`axes.get_x_axis_label(Tex("x", font_size=18))` was called with a pre-built `Tex` object. Internally, `get_axis_label` does `label = Tex(label_tex)` — wrapping the argument in `Tex` itself. Passing a `Tex` object makes it call `Tex(Tex(...))`, which crashes.
+
+**The fix:**
+Pass a plain string:
+```python
+# WRONG
+xl = axes.get_x_axis_label(Tex("x", font_size=18))
+
+# CORRECT
+xl = axes.get_x_axis_label("x")
+```
+
+To control font size, scale the returned label:
+```python
+xl = axes.get_x_axis_label("x")
+xl.scale(0.7)
+```
+
+**Mental check:**
+> "`get_x_axis_label` / `get_y_axis_label` take a **string**, not a Tex object — they build the Tex internally."
+
+---
+
 ## General Rules to Avoid These Errors
 
 1. **Always fetch from the ManimGL GitHub repo** when in doubt about an API — never assume community-fork docs apply: `https://raw.githubusercontent.com/3b1b/manim/master/manimlib/__init__.py`
