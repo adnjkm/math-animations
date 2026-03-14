@@ -2,6 +2,10 @@
 
 Source: https://github.com/3b1b/manim
 
+## GitHub Repo
+
+This project lives at **https://github.com/adnjkm/math-animations**. Push new scenes and doc updates there after each session.
+
 ---
 
 ## Living Documentation — Keep This Sharp
